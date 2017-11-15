@@ -1,3 +1,5 @@
+//Lawrence Chas Kane LA978453
+
 #include "spimcore.h"
 
 
