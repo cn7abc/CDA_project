@@ -5,24 +5,69 @@
 
 /* ALU */
 /* 10 Points */
-void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
-{
-
+void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero){
+    if(!ALUresult || !Zero) return;
+    switch (ALUControl) {
+        case 0:
+            *ALUresult = A + B;
+            if(!*ALUresult) *Zero = 1;
+            break;
+        
+        case 1:
+            *ALUresult = A - B;
+            if(!*ALUresult) *Zero = 1;
+            break;
+        
+        case 2:
+            if(A < B) *ALUresult = 1;
+            else      *ALUresult = 0;
+            if(!*ALUresult) *Zero = 1;
+            break;
+            
+        case 3:
+            
+            if(!*ALUresult) *Zero = 1;
+            break;
+            
+        case 4:
+            
+            if(!*ALUresult) *Zero = 1;
+            break;
+            
+        case 5:
+            
+            if(!*ALUresult) *Zero = 1;
+            break;
+            
+        case 6:
+            
+            if(!*ALUresult) *Zero = 1;
+            break;
+            
+        case 7:
+            
+            if(!*ALUresult) *Zero = 1;
+            break;
+            
+        default:
+            Halt = 1;
+            break;
+    }
 }
 
 /* instruction fetch */
 /* 10 Points */
-int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction)
-{
-
+int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction){
+    if(!instruction || !Mem || PC % 4) return 1;
+    
+    *instruction = MEM(PC);
 }
 
 
 /* instruction partition */
 /* 10 Points */
-void instruction_partition(unsigned instruction, unsigned *op, unsigned *r1,unsigned *r2, unsigned *r3, unsigned *funct, unsigned *offset, unsigned *jsec)
-{
-
+void instruction_partition(unsigned instruction, unsigned *op, unsigned *r1,unsigned *r2, unsigned *r3, unsigned *funct, unsigned *offset, unsigned *jsec){
+    
 }
 
 

@@ -353,7 +353,8 @@ int main(int argc, char **argv)
 {
 	int i;
 	unsigned long t;
-
+    
+    // Input validation
 	setvbuf(stdout, (char *) NULL, _IOLBF, 0);
 	if (argc != 2 && argc != 3)
 	{
@@ -370,8 +371,11 @@ int main(int argc, char **argv)
 		fprintf(stderr, "%s: cannot open input file %s\n", argv[0], argv[1]);
 		return 1;
 	}
+    
 	if (argc == 3)
 	{
+        // strcmp() returns 0 if input strings are equal.
+        // TODO: figure out what Redir is and why the next 3 lines are important.
 		if (strcmp(argv[2], "-r") == 0)
 		{
 			Redir = (char *) RedirPrefix;
@@ -383,7 +387,18 @@ int main(int argc, char **argv)
 			return 1;
 		}
 	}
+    
+    // memset(a, b, c) fills memory with the value b, c times starting, at address a.
+    // Seems Mem is the memory of our simulated computer?
 	memset(Mem, 0, MEMSIZE * sizeof(unsigned));
+    
+    // Scans through input file, converting the first part (from beginning to first white
+    // space) of each line to an unsigned long, which is then stored in Mem in an interesting way.
+    //
+    // From top of this file, we define "MEM(addr)" to map to "(Mem[addr >> 2])"
+    //
+    // Notice that we're adding 4 to our index each time, and that >>2 is the same as dividing by 4.
+    // So we're using i both to denote distance from PCINIT and to fill the Mem array without gaps.
 	for (i = PCINIT; !feof(FP); i += 4)
 	{
 		if (fgets(Buf, BUFSIZE, FP) == NULL)
